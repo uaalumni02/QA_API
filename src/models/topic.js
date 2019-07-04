@@ -8,7 +8,6 @@ const isValidTopic = (topic) => {
   
   const topicSchema = mongoose.Schema({
     
-    _id: mongoose.Schema.Types.ObjectId,
     topic: {
         type: String, 
         required: [true, 'topic is required'], 
@@ -20,4 +19,4 @@ const isValidTopic = (topic) => {
 
 
 
-export default mongoose.model('topicInformation', TopicSchema);
+export default mongoose.model('Topic', topicSchema);
