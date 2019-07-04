@@ -20,4 +20,4 @@ const isValidTopic = (topic) => {
 
 
 
-export default mongoose.model('Topic', TopicSchema);
+export default mongoose.model('topicInformation', TopicSchema);
