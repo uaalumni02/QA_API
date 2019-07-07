@@ -15,5 +15,8 @@ router.post('/', questionController.addQuestions);
 //shows all data
 router.get('/', questionController.allQuestions);
 
+//search appt by topic ID
+router.get('/:topic', questionController.searchQuestion);
+
 
 export default router;
