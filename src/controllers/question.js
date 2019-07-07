@@ -10,7 +10,9 @@ const router = express.Router();
 //add questions
 router.addQuestions = ('/', (req, res, next) => {
     const question = new Question({
-        question: req.body.question
+        question: req.body.question,
+        //passing topic id
+        topic: req.body.topic
     });
     question
         .save()
@@ -29,5 +31,20 @@ router.addQuestions = ('/', (req, res, next) => {
         });
 });
 
+
+//show all question
+router.allQuestions = ('/', (req, res) => {
+    Question.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
 
 export default router;

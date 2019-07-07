@@ -10,6 +10,10 @@ const Schema = mongoose.Schema;
         min:5, 
         max: 200,
     },
+    topic: {
+      type: Schema.Types.ObjectId,
+      ref: 'topics',
+    },
 });
 
 
