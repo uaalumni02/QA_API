@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
   
   const answerSchema = mongoose.Schema({
+    questionId: {
+      type: String
+  },
     
     answer: {
         type: String, 
