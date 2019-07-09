@@ -32,5 +32,20 @@ router.addAnswer = ('/', (req, res, next) => {
 
 });
 
+//show all answers
+router.allAnswers = ('/', (req, res) => {
+    Answer.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
 
 export default router;

@@ -11,5 +11,8 @@ const router = express.Router();
 // Insert JSON straight into MongoDB
 router.post('/', answerController.addAnswer);
 
+//shows all data
+router.get('/', answerController.allAnswers);
+
 
 export default router;
