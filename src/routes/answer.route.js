@@ -10,9 +10,10 @@ const router = express.Router();
 
 // Insert JSON straight into MongoDB
 router.post('/', answerController.addAnswer);
-
 //shows all data
 router.get('/', answerController.allAnswers);
+//delete answer from the DB
+router.delete('/:id', answerController.removeAnswer);
 
 
 export default router;
