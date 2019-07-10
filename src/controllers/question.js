@@ -85,4 +85,22 @@ router.removeQuestion = ('/:id', (req, res) => {
             });
         });
 });
+
+//edit question
+router.editQuestion = ('/:id', (req, res) => {
+    const editQuestion = { 
+        question: req.body.question,
+        };
+    Question.update({ $set: editQuestion })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
 export default router;

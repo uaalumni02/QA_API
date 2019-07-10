@@ -17,5 +17,7 @@ router.get('/', questionController.allQuestions);
 router.get('/:topic', questionController.searchQuestion);
 //delete question from the DB
 router.delete('/:id', questionController.removeQuestion);
+//edit question
+router.patch('/:id', questionController.editQuestion);
 
 export default router;
