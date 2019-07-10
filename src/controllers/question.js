@@ -68,4 +68,21 @@ router.searchQuestion = ('/:topic', (req, res, next) => {
         });
 });
 
+//delete questions
+router.removeQuestion = ('/:id', (req, res) => {
+    const id = req.params.id;
+    Question.findOneAndDelete({ '_id': id })
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: 'removed from database',
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
 export default router;
