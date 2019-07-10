@@ -16,5 +16,7 @@ router.post('/', userController.createUser);
 router.post('/login', userController.logIn);
 //delete user
 router.delete('/:id', userController.removeUser);
+//shows all user
+router.get('/', checkAuth, userController.allUsers);
 
 export default router;
