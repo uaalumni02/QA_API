@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import checkAuth from '../middleware/check-auth';
 
 //import model
 import Topic from '../models/topic';
@@ -10,10 +11,10 @@ const router = express.Router();
 
 
 // Insert JSON straight into MongoDB
-router.post('/', topicController.addTopics);
+router.post('/', checkAuth, topicController.addTopics);
 
 //shows all data
-router.get('/', topicController.allTopics);
+router.get('/', checkAuth, topicController.allTopics);
 
 
 export default router;

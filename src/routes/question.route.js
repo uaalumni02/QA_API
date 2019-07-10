@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import checkAuth from '../middleware/check-auth';
 
 //import model
 import Question from '../models/question';
@@ -10,14 +11,14 @@ const router = express.Router();
 
 
 // Insert JSON straight into MongoDB
-router.post('/', questionController.addQuestions);
+router.post('/', checkAuth, questionController.addQuestions);
 //shows all data
-router.get('/', questionController.allQuestions);
+router.get('/', checkAuth, questionController.allQuestions);
 //search appt by topic ID
-router.get('/:topic', questionController.searchQuestion);
+router.get('/:topic', checkAuth, questionController.searchQuestion);
 //delete question from the DB
-router.delete('/:id', questionController.removeQuestion);
+router.delete('/:id', checkAuth, questionController.removeQuestion);
 //edit question
-router.patch('/:id', questionController.editQuestion);
+router.patch('/:id', checkAuth, questionController.editQuestion);
 
 export default router;

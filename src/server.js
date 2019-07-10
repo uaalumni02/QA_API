@@ -12,6 +12,7 @@ const port = process.env.PORT || 3000;
 import topicRoutes from './routes/topic.route';
 import questionRoutes from './routes/question.route';
 import answerRoutes from './routes/answer.route';
+import userRoutes from './routes/user.route';
 
 app.use(cors());
 app.use(express.json());
@@ -33,6 +34,7 @@ mongoose.connect(DB_URL, { useNewUrlParser: true }, (err) => {
 app.use('/api/topic', topicRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/answer', answerRoutes);
+app.use('/api/user', userRoutes);
 
 
 app.listen(port, () => console.log('server is running'));

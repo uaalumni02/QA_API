@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import checkAuth from '../middleware/check-auth';
 
 //import model
 import Answer from '../models/answer';
@@ -9,13 +10,13 @@ import answerController from '../controllers/answer';
 const router = express.Router();
 
 // Insert JSON straight into MongoDB
-router.post('/', answerController.addAnswer);
+router.post('/', checkAuth, answerController.addAnswer);
 //shows all data
-router.get('/', answerController.allAnswers);
+router.get('/', checkAuth, answerController.allAnswers);
 //delete answer from the DB
-router.delete('/:id', answerController.removeAnswer);
+router.delete('/:id', checkAuth, answerController.removeAnswer);
 //edit answer
-router.patch('/:id', answerController.editAnswer);
+router.patch('/:id', checkAuth, answerController.editAnswer);
 
 
 export default router;
