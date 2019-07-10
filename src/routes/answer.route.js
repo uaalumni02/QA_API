@@ -14,6 +14,8 @@ router.post('/', answerController.addAnswer);
 router.get('/', answerController.allAnswers);
 //delete answer from the DB
 router.delete('/:id', answerController.removeAnswer);
+//edit answer
+router.patch('/:id', answerController.editAnswer);
 
 
 export default router;

@@ -65,5 +65,23 @@ router.removeAnswer = ('/:id', (req, res) => {
         });
 });
 
+//edit answer
+router.editAnswer = ('/:id', (req, res) => {
+    const editAnswer = { 
+        answer: req.body.answer,
+        };
+    Answer.update({ $set: editAnswer })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+
 
 export default router;
