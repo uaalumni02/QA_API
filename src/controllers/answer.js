@@ -6,22 +6,23 @@ import Question from '../models/question';
 
 const router = express.Router();
 
-//add answer and link to questions
+//add answer, link to question and answer by passing ID
 router.addAnswer = ('/', (req, res, next) => {
     const answer = new Answer({
-        questionId: req.body.questionId,
+        question: req.body.question,
+        user: req.body.user,
         answer: req.body.answer,
     });
     answer
         .save()
         .then(result => {
-            Question.findById(result.questionId)
+            Question.findById(result.question)
                 .exec()
                 .then(questionData => {
                     res.status(201).json({
                         message: 'added to database',
-                        updatedAnswer: answer,
-                        question: questionData
+                        answer: answer,
+                        question: questionData,
                     });
                 })
                 .catch((err) => {
@@ -32,9 +33,9 @@ router.addAnswer = ('/', (req, res, next) => {
 
 });
 
-//show all answers
+//show all answer using populate with db ref --- see model to get username and question
 router.allAnswers = ('/', (req, res) => {
-    Answer.find()
+    Answer.find().populate('user question')
         .exec()
         .then(docs => {
             res.status(200).json(docs);
