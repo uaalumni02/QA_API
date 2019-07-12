@@ -13,7 +13,9 @@ router.addQuestions = ('/', (req, res, next) => {
     const question = new Question({
         question: req.body.question,
         //passing topic id
-        topic: req.body.topic
+        topic: req.body.topic,
+        //passing in user id
+        user: req.body.user,
     });
     question
         .save()
@@ -35,7 +37,7 @@ router.addQuestions = ('/', (req, res, next) => {
 
 //show all question
 router.allQuestions = ('/', (req, res) => {
-    Question.find()
+    Question.find().populate('user topic')
         .exec()
         .then(docs => {
             res.status(200).json(docs);

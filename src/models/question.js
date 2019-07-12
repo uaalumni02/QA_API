@@ -12,7 +12,11 @@ const Schema = mongoose.Schema;
     },
     topic: {
       type: Schema.Types.ObjectId,
-      ref: 'topics',
+      ref: 'Topic',
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
 });
 
