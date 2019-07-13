@@ -14,7 +14,7 @@ const router = express.Router();
 router.post('/', checkAuth, topicController.addTopics);
 
 //shows all data
-router.get('/', checkAuth, topicController.allTopics);
+router.get('/', checkAuth, topicController.getAllTopics);
 
 
 export default router;

@@ -1,47 +1,26 @@
-import express from 'express';
-import mongoose from 'mongoose';
-
 import Topic from '../models/topic';
+import * as db from '../db/db';
 
-const router = express.Router();
+class TopicData {
+    static async addTopics(req, res) {
+        const newTopicData = { ...req.body };
+        try {
+            const addTopics = await db.addNewTopic(Topic, newTopicData)
+            return res.status(200).json(addTopics)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async getAllTopics(req, res) {
+        try {
+            const allTopics = await db.getAllTopics(Topic)
+            return res.status(200).json(allTopics)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+}
 
-//add topics
-router.addTopics = ('/', (req, res, next) => {
-    const topic = new Topic({
-        topic: req.body.topic
-    });
-    topic
-        .save()
-        .then(result => {
-            if (result) {
-                res.status(201).json({
-                    message: 'Added to databse'
-                })
-            } else {
-                res.status(404).json({ message: "Please enter valid topic" });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err })
-        });
-});
-
-//get topics
-router.allTopics = ('/', (req, res) => {
-    Topic.find()
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-export default router;
+export default TopicData;
 
 
