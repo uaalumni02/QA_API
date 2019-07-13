@@ -11,13 +11,13 @@ const router = express.Router();
 
 
 // Insert JSON straight into MongoDB
-router.post('/', checkAuth, questionController.addQuestions);
-//shows all data
+router.post('/', checkAuth, questionController.addQuestion);
+// shows all data
 router.get('/', checkAuth, questionController.allQuestions);
 //search appt by topic ID
 router.get('/:topic', checkAuth, questionController.searchQuestion);
 //delete question from the DB
-router.delete('/:id', checkAuth, questionController.removeQuestion);
+router.delete('/:id', checkAuth, questionController.deleteQuestion);
 //edit question
 router.patch('/:id', checkAuth, questionController.editQuestion);
 

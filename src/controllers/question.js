@@ -1,108 +1,53 @@
-import express from 'express';
-import mongoose from 'mongoose';
-
-
 import Question from '../models/question';
-// import Topic from '../models/topic';
+import * as db from '../db/db';
 
-const router = express.Router();
+class QuestionData {
+    static async addQuestion(req, res) {
+        const newQuestionData = { ...req.body };
+        try {
+            const addQuestions = await db.addNewQuestion(Question, newQuestionData)
+            return res.status(200).json(addQuestions)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async allQuestions(req, res) {
+        try {
+            const allQuestions = await db.getAllQuestions(Question)
+            return res.status(200).json(allQuestions)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async deleteQuestion(req, res) {
+        const { id } = req.params;
+        try {
+            const questionToDelete = await db.deleteQuestion(Question, id)
+            return res.status(200).json(questionToDelete)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async editQuestion(req, res) {
+        const { question, topic, user } = req.body,
+            updateQuestion = { question, topic, user };
+        try {
+            const questionToEdit = await db.editQuestion(Question, updateQuestion)
+            return res.status(200).json(questionToEdit)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    //get questions by topic id
+    static async searchQuestion(req, res) {
+        const { topic } = req.params;
+        try {
+            const questionsByTopic = await db.getQuestionByTopic(Question, topic)
+            return res.status(200).json(questionsByTopic)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+}
 
-
-//add questions
-router.addQuestions = ('/', (req, res, next) => {
-    const question = new Question({
-        question: req.body.question,
-        //passing topic id
-        topic: req.body.topic,
-        //passing in user id
-        user: req.body.user,
-    });
-    question
-        .save()
-        .then(result => {
-            if (result) {
-                res.status(201).json({
-                    message: 'Added to databse'
-                })
-            } else {
-                res.status(404).json({ message: "Please enter valid question" });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err })
-        });
-});
-
-
-//show all question
-router.allQuestions = ('/', (req, res) => {
-    Question.find().populate('user topic')
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-//search questions by topic ID
-router.searchQuestion = ('/:topic', (req, res, next) => {
-    const topic = req.params.topic;
-    Question.find({ 'topic': topic })
-        .exec()
-        .then(doc => {
-            console.log("from database", doc);
-            if (doc) {
-                res.status(200).json(doc);
-            } else {
-                res.status(404).json({ message: "No valid ID entered" });
-
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({ error: err })
-        });
-});
-
-//delete questions
-router.removeQuestion = ('/:id', (req, res) => {
-    const id = req.params.id;
-    Question.findOneAndDelete({ '_id': id })
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                message: 'removed from database',
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-//edit question
-router.editQuestion = ('/:id', (req, res) => {
-    const editQuestion = { 
-        question: req.body.question,
-        };
-    Question.update({ $set: editQuestion })
-        .exec()
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-export default router;
+export default QuestionData;
