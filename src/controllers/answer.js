@@ -1,88 +1,44 @@
-import express from 'express';
-import mongoose from 'mongoose';
-
 import Answer from '../models/answer';
 import Question from '../models/question';
+import * as db from '../db/db';
 
-const router = express.Router();
+class AnswerData {
+    static async addAnswer(req, res) {
+        const newAnswerData = { ...req.body };
+        try {
+            const addAnswer = await db.addAnswer(Answer, newAnswerData)
+            return res.status(200).json(addAnswer)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async allAnswers(req, res) {
+        try {
+            const allAnswers = await db.getAllAnswers(Answer)
+            return res.status(200).json(allAnswers)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async deleteAnswer(req, res) {
+        const { id } = req.params;
+        try {
+            const answerToDelete = await db.deleteAnswer(Answer, id)
+            return res.status(200).json(answerToDelete)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    static async editAnswer(req, res) {
+        const { answer } = req.body,
+            updateAnswer = { answer };
+        try {
+            const answerToEdit = await db.editAnswer(Answer, updateAnswer)
+            return res.status(200).json(answerToEdit)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+}
 
-//add answer, link to question and answer by passing ID
-router.addAnswer = ('/', (req, res, next) => {
-    const answer = new Answer({
-        question: req.body.question,
-        user: req.body.user,
-        answer: req.body.answer,
-    });
-    answer
-        .save()
-        .then(result => {
-            Question.findById(result.question)
-                .exec()
-                .then(questionData => {
-                    res.status(201).json({
-                        message: 'added to database',
-                        answer: answer,
-                        question: questionData,
-                    });
-                })
-                .catch((err) => {
-                    console.log(err.message)
-                })
-        })
-        .catch(err => console.log(err));
-
-});
-
-//show all answer using populate with db ref --- see model to get username and question
-router.allAnswers = ('/', (req, res) => {
-    Answer.find().populate('user question')
-        .exec()
-        .then(docs => {
-            res.status(200).json(docs);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-//delete answer
-router.removeAnswer = ('/:id', (req, res) => {
-    const id = req.params.id;
-    Answer.findOneAndDelete({ '_id': id })
-        .exec()
-        .then(result => {
-            res.status(200).json({
-                message: 'removed from database',
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-//edit answer
-router.editAnswer = ('/:id', (req, res) => {
-    const editAnswer = { 
-        answer: req.body.answer,
-        };
-    Answer.update({ $set: editAnswer })
-        .exec()
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            });
-        });
-});
-
-
-export default router;
+export default AnswerData;

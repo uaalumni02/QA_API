@@ -14,7 +14,7 @@ router.post('/', checkAuth, answerController.addAnswer);
 //shows all data
 router.get('/', checkAuth, answerController.allAnswers);
 //delete answer from the DB
-router.delete('/:id', checkAuth, answerController.removeAnswer);
+router.delete('/:id', checkAuth, answerController.deleteAnswer);
 //edit answer
 router.patch('/:id', checkAuth, answerController.editAnswer);
 

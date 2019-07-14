@@ -67,3 +67,42 @@ export const getAllTopics = async model => {
       throw error;
     }
   }
+
+  export const getAllAnswers = async model => {
+    try {
+      const allAnswers = await model.find({}).populate('user question').exec()
+      return allAnswers
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  export const editAnswer = async (model, data) => {
+    try {
+      const editAnswer = await model.update({ ...data })
+      return data
+    } catch (error) {
+      throw error
+    }
+  }
+
+  export const addAnswer = async (model, data) => {
+    const newAnswer = new model({ ...data });
+    return newAnswer.save()
+      .then(res => {
+          //passing question and user id's
+        const { answer, question, user } = res, AnswerData = { answer, question, user}
+        return AnswerData
+      })
+      .catch(error => {
+        return { error }
+      })
+  }
+  export const deleteAnswer = async (model, id) => {
+    try {
+      const deleteAnswer = await model.findOneAndDelete({ _id: id })
+      return deleteAnswer
+    } catch (error) {
+      throw error
+    }
+  }
