@@ -38,3 +38,5 @@ app.use('/api/user', userRoutes);
 
 
 app.listen(port, () => console.log('server is running'));
+
+export default app;

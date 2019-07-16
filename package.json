@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require @babel/register ./tests/*.js",
     "start:dev": "nodemon --exec babel-node src/server",
     "start": "node build/server.js"
   },
@@ -26,7 +29,13 @@
     "@babel/plugin-syntax-object-rest-spread": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
     "@babel/runtime": "^7.4.5",
-    "nodemon": "^1.19.1"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }

@@ -106,3 +106,12 @@ export const getAllTopics = async model => {
       throw error
     }
   }
+
+  export const getAllUsers = async model => {
+    try {
+      const allTopics = await model.find({});
+      return allTopics
+    } catch (error) {
+      throw error;
+    }
+  }
