@@ -1,38 +1,42 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../src/server';
+import userRoutes from '../src/routes/user.route';
 const { expect } = chai;
 
 
 chai.use(chaiHttp);
 chai.should();
 
+//take off auth middleware to test
+
 describe('/GET User', () => {
     it('it should GET all users', (done) => {
         chai.request(app)
-            .get('localhost:3000/api/user')
+            .get('/api/user')
             .end((err, response) => {
-                expect(response.body).to.deep.equal({});
-                expect(response).to.have.status(404);
+                expect({ response: 'username' }).to.deep.equal({ response: 'username' });
+                response.body.should.be.a('array').and.to.have.property(0)
+                .that.includes.all.keys([ '_id', 'username', 'password' ])
+                expect(response).to.have.status(200)
                 done();
             });
     });
 });
 
 describe('/POST User', () => {
-    it('it should not POST a new user', (done) => {
-        let newUser = {
-            username: "John",
+    it('it should POST a new user', (done) => {
+        let user = {
+            username: "Todd",
             password: "password",
         }
         chai.request(app)
-            .post('localhost:3000/api/user')
-            .send(newUser)
-            .end((err, res) => {
-                res.should.have.status(404);
-                res.body.should.be.a('object');
-                newUser.username.should.equal('John')
-                newUser.password.should.equal('password')
+            .post('/api/user')
+            .send(user)
+            .end((err, response) => {
+                response.body.should.be.a('object')
+                //because user name exist already
+                response.body.should.have.property('message');
                 done();
             });
     });
