@@ -40,5 +40,4 @@ class AnswerData {
         }
     }
 }
-
 export default AnswerData;

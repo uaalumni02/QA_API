@@ -20,7 +20,6 @@ class TopicData {
         }
     }
 }
-
 export default TopicData;
 
 

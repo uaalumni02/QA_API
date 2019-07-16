@@ -49,5 +49,4 @@ class QuestionData {
         }
     }
 }
-
 export default QuestionData;
