@@ -11,15 +11,14 @@ chai.should();
 //take off auth middleware to test
 
 // describe('/GET Topic', () => {
-//   it('it should GET all topics', (done) => {
-//     chai.request(app)
-//         .get('/api/topic')
-//         .end((err, response) => {
-//           expect(response.body).to.deep.equal({});
-//           expect(response).to.have.status(404);
-//           done();
-//         });
-//   });
+//     it('it should GET all topics', (done) => {
+//         chai.request(app)
+//             .get('/api/topic')
+//             .end((err, response) => {
+//                 response.body.should.be.a('array')
+//                 done();
+//             });
+//     });
 // });
 // describe('/POST Topic', () => {
 //   it('it should not POST a new topic', (done) => {
