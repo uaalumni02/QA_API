@@ -32,3 +32,15 @@ describe('/GET Topic', () => {
             .expect(401, done);
     });
 });
+describe('/POST TOPIC', () => {
+    it('it should not be able to post topic since no token was sent', (done) => {
+        let topic = {
+            topic: "Sockets",
+        }
+        request(app)
+            .post('/api/topic')
+            .send(topic)
+            .expect(401, done);
+    });
+
+});
