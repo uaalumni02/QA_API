@@ -3,37 +3,32 @@ import chaiHttp from 'chai-http';
 import app from '../src/server';
 import topicRoutes from '../src/routes/topic.route';
 const { expect } = chai;
-
+var jwt = require('jsonwebtoken');
+import 'dotenv/config'
+import { config } from 'dotenv';
+var request = require('supertest');
 
 chai.use(chaiHttp);
 chai.should();
 
-//take off auth middleware to test
-
-// describe('/GET Topic', () => {
-//     it('it should GET all topics', (done) => {
-//         chai.request(app)
-//             .get('/api/topic')
-//             .end((err, response) => {
-//                 response.body.should.be.a('array')
-//                 done();
-//             });
-//     });
-// });
-// describe('/POST Topic', () => {
-//   it('it should not POST a new topic', (done) => {
-//       let newTopic = {
-//           topic: "Sockets",
-//       }
-//     chai.request(app)
-//         .post('localhost:3000/api/topic')
-//         .send(newTopic)
-//         .end((err, res) => {
-//               res.should.have.status(404);
-//               res.body.should.be.a('object');
-//               expect(newTopic).to.have.property('topic', 'Sockets');
-//           done();
-//         });
-//   });
-
-// });
+describe('/GET Topic', () => {
+    it('it should GET all topics', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        chai.request(app)
+            .get('/api/topic')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err, response) => {
+                response.body.should.be.a('array')
+                done();
+            });
+    });
+});
+describe('/GET Topic', () => {
+    it('should not be able to consume the route /topic since no token was sent', function (done) {
+        request(app)
+            .get('/api/topic')
+            .expect(401, done);
+    });
+});
