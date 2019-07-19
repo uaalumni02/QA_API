@@ -16,7 +16,7 @@ describe('POST /login', function () {
         request(app)
             .post('/api/user/login')
             .type('json')
-            .send('{"username":"meco","password":"password"}')
+            .send('{"username":"Todd","password":"password"}')
             .end(function (err, res) {
                 if (err) return done(err);
                 expect(res.body).have.property('token');
@@ -34,6 +34,8 @@ it('it responds with JSON if good authorization header', function (done) {
         .set('Authorization', 'Bearer ' + token)
         .expect('Content-Type', /json/)
         .end(function (err, res) {
+            expect(res.body[0]).to.have.property('username');
+            expect(res.body[0]).to.have.property('password');
             if (err) return done(err);
             done();
         });
