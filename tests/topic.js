@@ -58,6 +58,7 @@ describe('/POST TOPIC', () => {
             .send(topic)
             .end((err, response) => {
                 response.body.should.be.a('object')
+                expect(response.body).to.have.property('topic');
                 done();
             });
     });
