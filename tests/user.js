@@ -5,11 +5,11 @@ import userRoutes from '../src/routes/user.route';
 const { expect } = chai;
 var request = require('supertest');
 var jwt = require('jsonwebtoken');
-import 'dotenv/config'
 import { config } from 'dotenv';
 
 chai.use(chaiHttp);
 chai.should();
+
 
 describe('POST /login', function () {
     it('it returns JWT token if good username or password', function (done) {
@@ -50,10 +50,9 @@ describe('/POST User', () => {
             .send(user)
             .end((err, response) => {
                 response.body.should.be.a('object')
-                //because user name exist already should get message
-                response.body.should.have.property('message');
                 done();
             });
     });
 
 });
+

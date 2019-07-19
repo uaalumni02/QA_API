@@ -22,13 +22,21 @@ app.use(express.urlencoded({ extended: true }))
 mongoose.Promise = global.Promise
 
 const DB_URL = process.env.MONGO_URL;
+const TEST_DB_URL = process.env.MONGO_TEST_URL;
 
-// Connect to mongoose
-mongoose.connect(DB_URL, { useNewUrlParser: true }, (err) => {
-    if (err)
-        return console.log('Unable to Connect to MongoDB')
-    return console.log('Connection Successful')
-})
+if (process.env.NODE_ENV == "test") {
+    mongoose.connect(TEST_DB_URL, { useNewUrlParser: true }, (err) => {
+        if (err)
+            return console.log('Unable to Connect to MongoDB')
+        return console.log('Connection Successful to test DB')
+    })
+} else {
+    mongoose.connect(DB_URL, { useNewUrlParser: true }, (err) => {
+        if (err)
+            return console.log('Unable to Connect to MongoDB')
+        return console.log('Connection Successful')
+    })
+}
 
 //middleware to utilize routes
 app.use('/api/topic', topicRoutes);

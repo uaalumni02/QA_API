@@ -4,7 +4,6 @@ import app from '../src/server';
 import topicRoutes from '../src/routes/topic.route';
 const { expect } = chai;
 var jwt = require('jsonwebtoken');
-import 'dotenv/config'
 import { config } from 'dotenv';
 var request = require('supertest');
 
@@ -41,6 +40,26 @@ describe('/POST TOPIC', () => {
             .post('/api/topic')
             .send(topic)
             .expect(401, done);
+    });
+
+});
+
+describe('/POST TOPIC', () => {
+    it('it should post topic since token was sent', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        let topic = {
+            topic: "Sockets",
+        }
+        request(app)
+            .post('/api/topic')
+            .set('Authorization', 'Bearer ' + token)
+            .send(topic)
+            .end((err, response) => {
+                response.body.should.be.a('object')
+                done();
+            });
     });
 
 });
