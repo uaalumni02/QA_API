@@ -7,9 +7,11 @@ var jwt = require('jsonwebtoken');
 import { config } from 'dotenv';
 var request = require('supertest');
 import Question from '../src/models/question';
+import Topic from '../src/models/topic';
 
 chai.use(chaiHttp);
 chai.should();
+
 
 describe('/POST QUESTION', () => {
     it('it should not be able to post question since no token was sent', (done) => {
@@ -51,6 +53,9 @@ describe('/POST QUESTION', () => {
             .send(question)
             .end((err, response) => {
                 response.body.should.be.a('object')
+                expect(response.body).to.have.property('question');
+                expect(response.body).to.have.property('topic');
+                expect(response.body).to.have.property('user');
                 done();
             });
     });
@@ -68,3 +73,99 @@ describe('/PATCH/:id QUESTION', () => {
         });
     });
 });
+
+describe('/PATCH/:id QUESTION', () => {
+    it('it should save and update a version of the question given the id as token was passed', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+
+        let question = new Question({ question: "how to install the sockets npm package", topic: '5d31172ca34070092c7400a3', user: '5d3109c6ad16b904e331ccfa' })
+        question.save((err, question) => {
+            request(app)
+                .patch('/api/question/' + 'question.id')
+                .set('Authorization', 'Bearer ' + token)
+                .send({ question: "how to install the socket npm package", topic: '5d31172ca34070092c7400a3', user: '5d3109c6ad16b904e331ccfa' })
+                .expect(200, done);
+            expect(question).to.have.property('question');
+            expect(question).to.have.property('topic');
+            expect(question).to.have.property('user');
+        });
+    });
+});
+describe('/GET/:id question', () => {
+    it('it should GET a question by the topic id', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        let question = new Question({ question: "how to close socket", topic: "5d32565659d1a60d1e18e57d", user: '5d324415483fa507cf52343b' });
+        question.save((err, question) => {
+            const topic = question.topic
+            request(app)
+                .get('/api/question/' + topic)
+                .set('Authorization', 'Bearer ' + token)
+                .send(question)
+                .end((err, response) => {
+                    response.body.should.be.a('array')
+                    expect(response.body[0]).to.have.property('question');
+                    expect(response.body[0]).to.have.property('topic');
+                    expect(response.body[0]).to.have.property('user');
+                    done();
+                });
+
+        });
+
+    });
+});
+
+describe('/GET/:id question', () => {
+    it('it should not GET a question by the topic id as token not passed', (done) => {
+        let question = new Question({ question: "how to close socket", topic: "5d32565659d1a60d1e18e57d", user: '5d324415483fa507cf52343b' });
+        question.save((err, question) => {
+            const topic = question.topic
+            request(app)
+                .get('/api/question/' + topic)
+                .send(question)
+                .expect(401)
+            done()
+        });
+
+    });
+});
+
+describe('/DELETE/:id question', () => {
+    it('it should DELETE a question by the topic id', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        let question = new Question({ question: "how to close socket", topic: "5d32565659d1a60d1e18e57d", user: '5d324415483fa507cf52343b' });
+        question.save((err, question) => {
+            const topic = question.topic
+            request(app)
+                .delete('/api/question/' + topic)
+                .set('Authorization', 'Bearer ' + token)
+                .end((err, response) => {
+                    response.should.have.status(200);
+                    expect(response.body).to.be.null;
+                    done();
+                });
+
+        });
+
+    });
+});
+
+describe('/DELETE/:id question', () => {
+    it('it should not DELETE a question by the topic id as token not passed', (done) => {
+        let question = new Question({ question: "how to close socket", topic: "5d32565659d1a60d1e18e57d", user: '5d324415483fa507cf52343b' });
+        question.save((err, question) => {
+            const topic = question.topic
+            request(app)
+                .delete('/api/question/' + topic)
+                .expect(401)
+            done()
+        });
+
+    });
+});
+
