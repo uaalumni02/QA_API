@@ -7,7 +7,6 @@ var jwt = require('jsonwebtoken');
 import { config } from 'dotenv';
 var request = require('supertest');
 import Question from '../src/models/question';
-import Topic from '../src/models/topic';
 
 chai.use(chaiHttp);
 chai.should();
