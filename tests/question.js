@@ -27,14 +27,6 @@ describe('/POST QUESTION', () => {
 
 });
 
-describe('/GET QUESTION', () => {
-    it('should not be able to get questions since no token was passed', function (done) {
-        request(app)
-            .get('/api/question')
-            .expect(401, done);
-    });
-});
-
 describe('/POST QUESTION', () => {
     it('it should post question since token was sent', (done) => {
         var token = jwt.sign({
@@ -59,6 +51,29 @@ describe('/POST QUESTION', () => {
             });
     });
 
+});
+
+describe('/GET QUESTION', () => {
+    it('should not be able to get questions since no token was passed', function (done) {
+        request(app)
+            .get('/api/question')
+            .expect(401, done);
+    });
+});
+
+describe('/GET QUESTION', () => {
+    it('it should GET all questions', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        chai.request(app)
+            .get('/api/question')
+            .set('Authorization', 'Bearer ' + token)
+            .end((err, response) => {
+                expect(response.body[0]).to.have.property('question');
+                done();
+            });
+    });
 });
 
 describe('/PATCH/:id QUESTION', () => {
