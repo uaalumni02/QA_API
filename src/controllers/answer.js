@@ -30,8 +30,8 @@ class AnswerData {
         }
     }
     static async editAnswer(req, res) {
-        const { answer } = req.body,
-            updateAnswer = { answer };
+        const { answer, question, user } = req.body,
+            updateAnswer = { answer, question, user };
         try {
             const answerToEdit = await db.editAnswer(Answer, updateAnswer)
             return res.status(200).json(answerToEdit)
