@@ -97,7 +97,6 @@ describe('/PATCH/:id ANSWER', () => {
         }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
         let answer = new Answer({ answer: "npm install", question: '5d31172ca34070092c7400a3', user: '5d3109c6ad16b904e331ccfa' })
         answer.save((err, answer) => {
-            console.log(answer)
             request(app)
                 .patch('/api/answer/' + 'answer.id')
                 .set('Authorization', 'Bearer ' + token)
@@ -107,7 +106,41 @@ describe('/PATCH/:id ANSWER', () => {
             expect(answer).to.have.property('answer');
             expect(answer).to.have.property('question');
             expect(answer).to.have.property('user');
- 
+
         });
+    });
+});
+
+describe('/DELETE/:id ANSWER', () => {
+    it('it should not DELETE a answer by  id as token not passed', (done) => {
+        let answer = new Answer({ answer: "google it", question: '5d31172ca34070092c7400a3', user: '5d3109c6ad16b904e331ccfa' })
+        answer.save((err, answer) => {
+            request(app)
+                .delete('/api/answer/' + 'answer.id')
+                .expect(401)
+            done()
+        });
+
+    });
+});
+
+describe('/DELETE/:id ANSWER', () => {
+    it('it should DELETE a answer by id as token is passed', (done) => {
+        var token = jwt.sign({
+            id: 1,
+        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
+        let answer = new Answer({ answer: "google it", question: '5d31172ca34070092c7400a3', user: '5d3109c6ad16b904e331ccfa' })
+        answer.save((err, answer) => {
+            const id = answer.id
+            // console.log(id)
+            request(app)
+                .delete('/api/answer' + id)
+                .set('Authorization', 'Bearer ' + token)
+                .end((err, response) => {
+                    response.body.should.be.a('object').that.is.empty;
+                    done();
+                });
+        });
+
     });
 });
