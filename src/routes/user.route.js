@@ -18,5 +18,7 @@ router.post('/login', userController.logIn);
 router.delete('/:id', userController.removeUser);
 //shows all user
 router.get('/', checkAuth, userController.allUsers);
+//show user by id
+router.get('/:id', checkAuth, userController.showUserById);
 
 export default router;

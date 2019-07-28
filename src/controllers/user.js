@@ -8,6 +8,7 @@ import User from '../models/user';
 
 const router = express.Router();
 
+
 //create user
 router.createUser = ('/', (req, res, next) => {
     User.find({ username: req.body.username })
@@ -53,7 +54,7 @@ router.createUser = ('/', (req, res, next) => {
 
 });
 
-//user login
+// //user login
 router.logIn = ('/login', (req, res, next) => {
 
     User.find({
@@ -124,6 +125,22 @@ router.allUsers = ('/', (req, res) => {
         .exec()
         .then(docs => {
             res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+});
+//get user by id
+router.showUserById = ('/:id', (req, res) => {
+    const id = req.params.id;
+    User.findById({ '_id': id })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+
         })
         .catch(err => {
             console.log(err);

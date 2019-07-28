@@ -105,3 +105,4 @@ export const getAllUsers = async model => {
     throw error;
   }
 }
+
