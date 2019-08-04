@@ -55,7 +55,7 @@ export const editQuestion = async (model, data) => {
 }
 export const getQuestionByTopic = async (model, topic) => {
   try {
-    const questions = await model.find({ topic })
+    const questions = await model.find({ topic }).populate('user topic').exec()
     return questions
   } catch (error) {
     throw error;
