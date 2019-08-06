@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
   
   const questionSchema = mongoose.Schema({
-    
     question: {
         type: String, 
         required: [true, 'question is required'], 

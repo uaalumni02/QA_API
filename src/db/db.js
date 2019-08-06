@@ -22,7 +22,7 @@ export const addNewQuestion = async (model, data) => {
   return newQuestion.save()
     .then(res => {
       //passing topic and user id's
-      const { question, topic, user } = res, questionData = { question, topic, user }
+      const {  question, topic, user } = res, questionData = {  question, topic, user }
       return questionData
     })
     .catch(error => {
@@ -57,6 +57,18 @@ export const getQuestionByTopic = async (model, topic) => {
   try {
     const questions = await model.find({ topic }).populate('user topic').exec()
     return questions
+  } catch (error) {
+    throw error;
+  }
+}
+export const getQuestionById = async (model, id) => {
+  // console.log('Gettingngngngn');
+  try {
+    const question = await model.findById( id).populate('user topic').exec()
+    // const question = await model.findById(id);
+  // return model.find({})
+    // .then(res => console.log('res', res));
+    return question
   } catch (error) {
     throw error;
   }

@@ -48,5 +48,15 @@ class QuestionData {
             res.status(500).json({ error: error })
         }
     }
+     //get questions by question id
+    static async getQuestionById(req, res) {
+        const { id } = req.params;
+        try {
+            const questionsById = await db.getQuestionById(Question, id)
+            return res.status(200).json(questionsById);
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
 }
 export default QuestionData;
