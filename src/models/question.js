@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
       type: String, 
       required: [true, 'description is required'], 
       min:5, 
-      max: 200,
+      max: 700,
   },
     topic: {
       type: Schema.Types.ObjectId,
