@@ -22,7 +22,7 @@ export const addNewQuestion = async (model, data) => {
   return newQuestion.save()
     .then(res => {
       //passing topic and user id's
-      const {  question, topic, user } = res, questionData = {  question, topic, user }
+      const {  question, description, topic, user } = res, questionData = {  question, description, topic, user }
       return questionData
     })
     .catch(error => {

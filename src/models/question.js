@@ -9,6 +9,12 @@ const Schema = mongoose.Schema;
         min:5, 
         max: 200,
     },
+    description: {
+      type: String, 
+      required: [true, 'description is required'], 
+      min:5, 
+      max: 200,
+  },
     topic: {
       type: Schema.Types.ObjectId,
       ref: 'Topic',
