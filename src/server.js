@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 //import routes
 import topicRoutes from './routes/topic.route';
 import questionRoutes from './routes/question.route';
+import questionTopicRoutes from './routes/questionTopic.route';
 import answerRoutes from './routes/answer.route';
 import userRoutes from './routes/user.route';
 
@@ -42,6 +43,7 @@ if (process.env.NODE_ENV == "test") {
 //middleware to utilize routes
 app.use('/api/topic', topicRoutes);
 app.use('/api/question', questionRoutes);
+app.use('/api/', questionTopicRoutes);
 app.use('/api/answer', answerRoutes);
 app.use('/api/user', userRoutes);
 

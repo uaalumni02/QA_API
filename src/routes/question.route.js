@@ -9,8 +9,7 @@ import questionController from '../controllers/question';
 
 const router = express.Router();
 
-//search question by topic ID
-router.get('/:topic', checkAuth, questionController.searchQuestion)
+
 //get question by question ID
 router.get('/:id', checkAuth, questionController.getQuestionById);;
 //delete question from the DB
@@ -21,6 +20,8 @@ router.patch('/:id', checkAuth, questionController.editQuestion);
 router.get('/', checkAuth, questionController.allQuestions);
 // Insert JSON straight into MongoDB
 router.post('/', checkAuth, questionController.addQuestion);
+
+
 
 
 
