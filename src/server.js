@@ -13,7 +13,7 @@ import topicRoutes from './routes/topic.route';
 import questionRoutes from './routes/question.route';
 import answerRoutes from './routes/answer.route';
 import userRoutes from './routes/user.route';
-import questionSearchTopic from './routes/questionSearchTopic.route';
+
 
 app.use(cors());
 app.use(express.json());
@@ -42,7 +42,6 @@ if (process.env.NODE_ENV == "test") {
 //middleware to utilize routes
 app.use('/api/topic', topicRoutes);
 app.use('/api/question', questionRoutes);
-app.use('/api/', questionSearchTopic);
 app.use('/api/answer', answerRoutes);
 app.use('/api/user', userRoutes);
 

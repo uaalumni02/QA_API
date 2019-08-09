@@ -4,10 +4,10 @@ const Schema = mongoose.Schema;
 
 const answerSchema = mongoose.Schema({
   question: {
-    type: String
+    type: String,
   },
   user: {
-    type: String
+    type: String,
   },
 
   answer: {

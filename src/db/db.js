@@ -63,7 +63,7 @@ export const getQuestionByTopic = async (model, topic) => {
 }
 export const getQuestionById = async (model, id) => {
   try {
-    const question = await model.findById( id).populate('user topic').exec()
+    const question = await model.findById(id).populate('user topic').exec()
     return question
   } catch (error) {
     throw error;
