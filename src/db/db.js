@@ -69,14 +69,6 @@ export const getQuestionById = async (model, id) => {
     throw error;
   }
 }
-export const getAllAnswers = async model => {
-  try {
-    const allAnswers = await model.find({}).populate('user question').exec()
-    return allAnswers
-  } catch (error) {
-    throw error;
-  }
-}
 export const editAnswer = async (model, data) => {
   try {
     const editAnswer = await model.update({ ...data })
@@ -109,6 +101,14 @@ export const getAllUsers = async model => {
   try {
     const allTopics = await model.find({});
     return allTopics
+  } catch (error) {
+    throw error;
+  }
+}
+export const getAnswerByQuestion = async (model, question) => {
+  try {
+    const answer = await model.find({ question }).populate('user question').exec()
+    return answer
   } catch (error) {
     throw error;
   }

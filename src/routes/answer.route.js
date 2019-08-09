@@ -9,10 +9,10 @@ import answerController from '../controllers/answer';
 
 const router = express.Router();
 
+//get answer by question ID
+router.get('/:question', checkAuth, answerController.getAnswerByQuestionId)
 // Insert JSON straight into MongoDB
 router.post('/', checkAuth, answerController.addAnswer);
-//shows all data
-router.get('/', checkAuth, answerController.allAnswers);
 //delete answer from the DB
 router.delete('/:id', checkAuth, answerController.deleteAnswer);
 //edit answer

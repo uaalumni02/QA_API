@@ -12,14 +12,6 @@ class AnswerData {
             res.status(500).json({ error: error })
         }
     }
-    static async allAnswers(req, res) {
-        try {
-            const allAnswers = await db.getAllAnswers(Answer)
-            return res.status(200).json(allAnswers)
-        } catch (error) {
-            res.status(500).json({ error: error })
-        }
-    }
     static async deleteAnswer(req, res) {
         const { id } = req.params;
         try {
@@ -35,6 +27,16 @@ class AnswerData {
         try {
             const answerToEdit = await db.editAnswer(Answer, updateAnswer)
             return res.status(200).json(answerToEdit)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
+    //get answer by question id
+    static async getAnswerByQuestionId(req, res) {
+        const { question } = req.params;
+        try {
+            const answerByQuestion = await db.getAnswerByQuestion(Answer, question)
+            return res.status(200).json(answerByQuestion)
         } catch (error) {
             res.status(500).json({ error: error })
         }
