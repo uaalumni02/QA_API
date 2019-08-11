@@ -119,7 +119,7 @@ describe('/GET/:id question', () => {
         question.save((err, question) => {
             const topic = question.topic
             request(app)
-                .get('/api/question/' + topic)
+                .get('/api/' + topic)
                 .set('Authorization', 'Bearer ' + token)
                 .send(question)
                 .end((err, response) => {

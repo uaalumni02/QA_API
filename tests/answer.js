@@ -51,31 +51,7 @@ describe('/POST ANSWER', () => {
 
 });
 
-describe('/GET ANSWER', () => {
-    it('should not be able to get answers since no token was passed', function (done) {
-        request(app)
-            .get('/api/answer')
-            .expect(401, done);
-    });
-});
 
-describe('/GET ANSWER', () => {
-    it('it should GET all answers', (done) => {
-        var token = jwt.sign({
-            id: 1,
-        }, process.env.JWT_KEY, { expiresIn: 60 * 60 });
-        chai.request(app)
-            .get('/api/answer')
-            .set('Authorization', 'Bearer ' + token)
-            .end((err, response) => {
-                response.body.should.be.a('array')
-                expect(response.body[0]).to.have.property('answer');
-                expect(response.body[0]).to.have.property('question');
-                expect(response.body[0]).to.have.property('user');
-                done();
-            });
-    });
-});
 
 describe('/PATCH/:id ANSWER', () => {
     it('it should not UPDATE a answer given the id as token not passed', (done) => {
@@ -132,7 +108,6 @@ describe('/DELETE/:id ANSWER', () => {
         let answer = new Answer({ answer: "google it", question: '5d31172ca34070092c7400a3', user: '5d3109c6ad16b904e331ccfa' })
         answer.save((err, answer) => {
             const id = answer.id
-            // console.log(id)
             request(app)
                 .delete('/api/answer' + id)
                 .set('Authorization', 'Bearer ' + token)
