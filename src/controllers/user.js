@@ -87,6 +87,7 @@ router.logIn = ('/login', (req, res, next) => {
                     );
                     return res.status(200).json({
                         token: token,
+                        userId: user[0]._id
                     });
                 }
                 res.status(401).json({
