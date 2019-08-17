@@ -19,6 +19,15 @@ class TopicData {
             res.status(500).json({ error: error })
         }
     }
+    static async getTopicById(req, res) {
+        const { id } = req.params;
+        try {
+            const topicById = await db.getTopicById(Topic, id)
+            return res.status(200).json(topicById)
+        } catch (error) {
+            res.status(500).json({ error: error })
+        }
+    }
 }
 export default TopicData;
 

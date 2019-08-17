@@ -113,4 +113,12 @@ export const getAnswerByQuestion = async (model, question) => {
     throw error;
   }
 }
+export const getTopicById = async (model, id) => {
+  try {
+    const topic = await model.findById(id)
+    return topic
+  } catch (error) {
+    throw error;
+  }
+}
 
