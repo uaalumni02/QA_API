@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-
   
   const questionSchema = mongoose.Schema({
     question: {
@@ -24,7 +23,6 @@ const Schema = mongoose.Schema;
       ref: 'User',
     },
 });
-
 
 
 export default mongoose.model('Question', questionSchema);

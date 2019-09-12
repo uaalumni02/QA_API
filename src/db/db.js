@@ -121,4 +121,3 @@ export const getTopicById = async (model, id) => {
     throw error;
   }
 }
-
