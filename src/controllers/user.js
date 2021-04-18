@@ -35,7 +35,6 @@ router.createUser = ('/', (req, res, next) => {
                     user
                         .save()
                         .then(result => {
-                            console.log(result)
                             res.status(201).json({
                                 message: 'User Created',
                             });
@@ -120,15 +119,13 @@ router.removeUser = ('/:id', (req, res) => {
         });
 });
 
-//show all answers
-router.allUsers = ('/', (req, res) => {
-    User.find()
+router.getAllUsers = ('/', (req, res) => {
+    User.find({})
         .exec()
         .then(docs => {
             res.status(200).json(docs);
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json({
                 error: err
             });

@@ -7,6 +7,10 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+
 
 //import routes
 import topicRoutes from './routes/topic.route';
@@ -14,11 +18,6 @@ import questionRoutes from './routes/question.route';
 import questionTopicRoutes from './routes/questionTopic.route';
 import answerRoutes from './routes/answer.route';
 import userRoutes from './routes/user.route';
-
-
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
 
 
 mongoose.Promise = global.Promise

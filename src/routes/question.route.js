@@ -1,9 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import checkAuth from '../middleware/check-auth';
 
-//import model
-import Question from '../models/question';
 // import controller
 import questionController from '../controllers/question';
 

@@ -1,10 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
 import checkAuth from '../middleware/check-auth';
 
-//import model
-import User from '../models/user';
 // import controller
 import userController from '../controllers/user';
 
@@ -17,7 +13,7 @@ router.post('/login', userController.logIn);
 //delete user
 router.delete('/:id', userController.removeUser);
 //shows all user
-router.get('/', checkAuth, userController.allUsers);
+router.get('/', checkAuth, userController.getAllUsers);
 //show user by id
 router.get('/:id', checkAuth, userController.showUserById);
 
