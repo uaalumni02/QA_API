@@ -55,6 +55,15 @@ class UserData {
       return Response.responseNotFound(res);
     }
   }
+  static async getUserById(req, res) {
+    const { id } = req.params;
+    try {
+        const userById = await Db.getUserById(User, id)
+        return Response.responseOk(res, userById)
+    } catch (error) {
+        return Response.responseNotFound(res)
+    }
+}
 }
 
 export default UserData;
