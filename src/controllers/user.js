@@ -42,7 +42,6 @@ class UserData {
         return Response.responseValidationError(res);
       }
     } catch (error) {
-      console.log(error)
       return Response.responseServerError(res);
     }
   }
