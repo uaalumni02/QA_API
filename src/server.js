@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
+const router = express.Router();
+
 
 //import routes
 import topicRoutes from './routes/topic.route';
@@ -40,12 +42,14 @@ if (process.env.NODE_ENV == "test") {
 }
 
 //middleware to utilize routes
-app.use('/api/topic', topicRoutes);
-app.use('/api/question', questionRoutes);
-app.use('/api/', questionTopicRoutes);
-app.use('/api/answer', answerRoutes);
-app.use('/api/user', userRoutes);
+router.use('/topic', topicRoutes);
+router.use('/question', questionRoutes);
+router.use('/api/', questionTopicRoutes);
+router.use('/answer', answerRoutes);
+router.use('/user', userRoutes);
 
+
+app.use("/api", router);
 
 app.listen(port, () => console.log('server is running'));
 

@@ -9,12 +9,9 @@ router.post("/login", userController.userLogin);
 
 router
   .route("/")
-  .post(userController.addUser)
-  .get(checkAuth, userController.getAllUsers);
+  .get(checkAuth, userController.getAllUsers)
+  .post(userController.addUser);
 
-router
-  .route("/:id")
-  .get(checkAuth, checkAuth, userController.getUserById);
-  
+router.route("/:id").get(checkAuth, checkAuth, userController.getUserById);
 
 export default router;
