@@ -111,7 +111,7 @@ class Db {
   static async getAnswerByQuestion(model, question) {
     try {
       const answer = await model
-        .findById(question )
+        .find({question} )
         .populate("user question")
         .exec();
       return answer;
