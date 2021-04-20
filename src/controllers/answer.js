@@ -5,9 +5,10 @@ class AnswerData {
   static async addAnswer(req, res) {
     const newAnswerData = { ...req.body };
     try {
-      const addAnswer = await DB.addAnswer(Answer, newAnswerData);
+      const addAnswer = await Db.addAnswer(Answer, newAnswerData);
       return res.status(200).json(addAnswer);
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error });
     }
   }
@@ -37,6 +38,7 @@ class AnswerData {
       const answerByQuestion = await Db.getAnswerByQuestion(Answer, question);
       return res.status(200).json(answerByQuestion);
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: error });
     }
   }

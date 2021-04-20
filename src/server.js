@@ -44,7 +44,7 @@ if (process.env.NODE_ENV == "test") {
 //middleware to utilize routes
 router.use('/topic', topicRoutes);
 router.use('/question', questionRoutes);
-router.use('/api/', questionTopicRoutes);
+router.use('/question/topic', questionTopicRoutes);
 router.use('/answer', answerRoutes);
 router.use('/user', userRoutes);
 
